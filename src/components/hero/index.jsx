@@ -1,7 +1,7 @@
 import { APP_HEADLINE } from "../../constant";
-import Group from "../group";
 import Text from "../text";
 import { useState } from "react";
+import SearchMeals from "./components/search";
 
 /**
  * on every input change
@@ -16,9 +16,15 @@ import { useState } from "react";
  * case : with useState
  * 1. STATES : searchResult(for result), query(for input, and update ui on every input change)
  *
+ * case : with useEffect
+ * 1. STATES : searchResult(for result), query(for input, and update ui on every input change)
+ *
+ * mention `query` in useEffect dependencies array
+ *
  */
 export default function Hero() {
   const [searchResult, setSearchResult] = useState({});
+  const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
 
   async function handleChange(event) {
@@ -26,10 +32,12 @@ export default function Hero() {
     const firstLetter = userInput.charAt(0);
     setQuery(userInput);
     if (userInput.length == 1 && !searchResult?.meals) {
+      setLoading(true);
       const res = await fetch(
         `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`
       );
       const data = await res.json();
+      setLoading(false);
       // setting data to state
       console.log(data);
       setSearchResult(data);
@@ -42,29 +50,20 @@ export default function Hero() {
 
   return (
     <section>
-      <Group>
-        <Text
-          className={
-            "text-7xl my-10 italic w-320 text-wrap text-center mx-auto"
-          }
-          htmlTag={"h1"}
-        >
-          {APP_HEADLINE}
-        </Text>
-        <input className="border" onChange={handleChange} type="text" />
-        {searchResult && (
-          <div>
-            {searchResult?.meals
-              ?.filter((meal) =>
-                meal.strMeal.toLowerCase().startsWith(query.toLowerCase())
-              )
-              .map((meal) => {
-                return <div key={meal.idMeal}>{meal.strMeal}</div>;
-              })}
-          </div>
+      <Text
+        className={"text-7xl my-10 italic w-320 text-wrap text-center mx-auto select-none "}
+        htmlTag={"h1"}
+      >
+        {APP_HEADLINE}
+      </Text>
+      <SearchMeals
+        handleChange={handleChange}
+        searchResult={searchResult?.meals?.filter((meal) =>
+          meal.strMeal.toLowerCase().startsWith(query.toLowerCase())
         )}
-      </Group>
-      <Group></Group>
+        loading={loading}
+        isQuery={query.length > 0}
+      />
     </section>
   );
 }

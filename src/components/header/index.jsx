@@ -10,7 +10,7 @@ export default function Header() {
     <header className={`flex justify-between items-center px-4 py-2`}>
       <Logo />
       <Navigation>
-        <a href="">{BROWSE_TEXT}</a>
+        <a href="#categories">{BROWSE_TEXT}</a>
         <Button className={"bg-orange-600 text-white font-bold py-2 px-4"}>
           <BiCoffeeTogo />
           <Text>{BUY_ME_COFFEE_TEXT}</Text>
