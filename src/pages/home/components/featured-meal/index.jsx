@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import Text from "../text";
+import { useRef, useState } from "react";
 import MealCard from "./meal-card";
 
 /**

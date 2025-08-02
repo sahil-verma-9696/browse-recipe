@@ -1,8 +1,8 @@
 import React from "react";
 import { ImImage, ImLocation, ImPriceTags } from "react-icons/im";
 import { MdRestaurant } from "react-icons/md";
-import Image from "../image";
-import Text from "../text";
+import Image from "../../../../components/image";
+import Text from "../../../../components/text";
 import { Link } from "react-router";
 
 export default function MealCard({ meal = {}, isLoading }) {

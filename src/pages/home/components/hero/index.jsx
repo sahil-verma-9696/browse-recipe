@@ -1,5 +1,5 @@
-import { APP_HEADLINE } from "../../constant";
-import Text from "../text";
+import { APP_HEADLINE } from "../../../../constant";
+import Text from "../../../../components/text";
 import { useState } from "react";
 import SearchMeals from "./components/search";
 

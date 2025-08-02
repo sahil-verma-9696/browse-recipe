@@ -7,22 +7,22 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 ## ✅ v1.0 - MVP: Basic Meal Explorer
 
 ### Pages
-- [ ] Home page with:
-  - [ ] Featured meals
-  - [ ] List of categories
-- [ ] Category page with:
-  - [ ] Category cards
-  - [ ] Meal count per category
-- [ ] Meal detail page:
-  - [ ] Ingredients
-  - [ ] Recipe steps
-  - [ ] YouTube embedded video
+- [x] Home page with:
+  - [x] Featured meals
+  - [x] List of categories
+- [x] Category page with:
+  - [x] Category cards
+  - [x] Meal count per category
+- [x] Meal detail page:
+  - [x] Ingredients
+  - [x] Recipe steps
+  - [x] YouTube embedded video
 
 ### Features
-- [ ] Lazy load images using IntersectionObserver API
-- [ ] Search meal with single network call
-- [ ] Data chunking on scroll
-- [ ] Shimmer UI while loading
+- [x] Lazy load images using IntersectionObserver API
+- [x] Search meal with single network call
+- [x] Data chunking on scroll
+- [x] Shimmer UI while loading
 
 ---
 

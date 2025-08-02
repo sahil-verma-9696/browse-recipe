@@ -14,6 +14,7 @@ import {
   Check,
 } from "lucide-react";
 import Image from "../../components/image";
+import { useGlobalContext } from "../../context/GlobalState";
 
 export default function RecipePage() {
   const { mealId } = useParams();
@@ -25,7 +26,7 @@ export default function RecipePage() {
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [checkedIngredients, setCheckedIngredients] = useState(new Set());
-
+  const { favorites, setFavorites } = useGlobalContext();
 
   const countRef = useRef(0);
   const intervalRef = useRef(null);
@@ -78,7 +79,7 @@ export default function RecipePage() {
   }
 
   // Extract ingredients and measurements
-  const getIngredients = () => {
+  const getIngredients = (meal) => {
     if (!meal) return [];
     const ingredients = [];
     for (let i = 1; i <= 20; i++) {
@@ -95,20 +96,6 @@ export default function RecipePage() {
       }
     }
     return ingredients;
-  };
-
-  const toggleFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    let newFavorites;
-
-    if (isFavorite) {
-      newFavorites = favorites.filter((id) => id !== mealId);
-    } else {
-      newFavorites = [...favorites, mealId];
-    }
-
-    localStorage.setItem("favorites", JSON.stringify(newFavorites));
-    setIsFavorite(!isFavorite);
   };
 
   const startTimer = () => {
@@ -144,6 +131,25 @@ export default function RecipePage() {
     setCheckedIngredients(newChecked);
   };
 
+  function handleFavoriteClick(meal) {
+    return () => {
+      setFavorites((prev) => {
+        const newFavorites = [...prev];
+        const isExist = newFavorites.findIndex(
+          (fav) => fav.idMeal === meal.idMeal
+        );
+
+        if (isExist !== -1) {
+          newFavorites.splice(isExist, 1);
+        } else {
+          newFavorites.push(meal);
+        }
+        return newFavorites;
+      });
+      setIsFavorite((prev) => !prev);
+    };
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
@@ -160,7 +166,7 @@ export default function RecipePage() {
     );
   }
 
-  const ingredients = getIngredients();
+  const ingredients = getIngredients(meal);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100">
@@ -177,7 +183,7 @@ export default function RecipePage() {
 
             {/* Favorite Button */}
             <button
-              onClick={toggleFavorite}
+              onClick={handleFavoriteClick(meal)}
               className={`absolute top-6 right-6 p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
                 isFavorite
                   ? "bg-red-500 text-white shadow-lg"
