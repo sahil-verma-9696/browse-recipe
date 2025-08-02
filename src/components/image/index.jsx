@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ImImage } from "react-icons/im";
 
+import cn from "../../utils/cn";
+
 export default function Image({ src, alt, className = "" }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -43,10 +45,7 @@ export default function Image({ src, alt, className = "" }) {
   };
 
   return (
-    <div
-      ref={imgRef}
-      className="relative overflow-hidden rounded-lg h-full"
-    >
+    <div ref={imgRef} className="relative overflow-hidden rounded-lg h-full">
       {/* Loading/Error Placeholder */}
       <div
         className={`absolute top-0 left-0 w-full h-full bg-gray-100 flex items-center justify-center transition-opacity duration-900 ${
@@ -65,10 +64,12 @@ export default function Image({ src, alt, className = "" }) {
           alt={alt}
           onLoad={handleLoad}
           onError={handleError}
-          className={`${className} object-cover w-full h-full transition-all duration-700 ease-out`}
+          className={cn(
+            `object-cover w-full h-full transition-all duration-700 ease-out`,
+            className
+          )}
         />
       )}
     </div>
   );
 }
-  

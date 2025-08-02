@@ -3,9 +3,10 @@ import { ImImage, ImLocation, ImPriceTags } from "react-icons/im";
 import { MdRestaurant } from "react-icons/md";
 import Image from "../image";
 import Text from "../text";
+import { Link } from "react-router";
 
 export default function MealCard({ meal = {}, isLoading }) {
-  const { strMeal, strCategory, strArea, strMealThumb, strTags } = meal;
+  const { idMeal,strMeal, strCategory, strArea, strMealThumb, strTags } = meal;
 
   if (isLoading) {
     return (
@@ -41,72 +42,74 @@ export default function MealCard({ meal = {}, isLoading }) {
   const tags = strTags ? strTags.split(",").filter((tag) => tag.trim()) : [];
 
   return (
-    <div className="group relative w-80 h-96 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-orange-200 cursor-pointer transform hover:-translate-y-2">
-      {/* Gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none"></div>
+    <Link to={`recipe/${idMeal}`}>
+      <div className="group relative w-80 h-96 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-orange-200 cursor-pointer transform hover:-translate-y-2">
+        {/* Gradient overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none"></div>
 
-      {/* Image container with overlay effects */}
-      <div className="relative h-48 overflow-hidden">
-        <Image
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-          src={strMealThumb || "/api/placeholder/320/192"}
-          alt={strMeal || "Loading meal"}
-        />
+        {/* Image container with overlay effects */}
+        <div className="relative h-48 overflow-hidden">
+          <Image
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            src={strMealThumb || "/api/placeholder/320/192"}
+            alt={strMeal || "Loading meal"}
+          />
 
-        {/* Floating category badge */}
-        <div className="absolute top-4 left-4 z-20">
-          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 backdrop-blur-sm text-gray-800 shadow-lg">
-            <MdRestaurant size={12} className="text-orange-500" />
-            {strCategory}
-          </span>
-        </div>
-      </div>
-
-      {/* Content section */}
-      <div className="p-6 h-48 flex flex-col justify-between relative z-10">
-        {/* Main content */}
-        <div className="space-y-3">
-          <Text className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-orange-600 transition-colors duration-300">
-            {strMeal}
-          </Text>
-
-          {/* Location with icon */}
-          <div className="flex items-center gap-2 text-gray-600">
-            <ImLocation size={14} className="text-orange-500 flex-shrink-0" />
-            <Text className="text-sm font-medium">{strArea}</Text>
+          {/* Floating category badge */}
+          <div className="absolute top-4 left-4 z-20">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 backdrop-blur-sm text-gray-800 shadow-lg">
+              <MdRestaurant size={12} className="text-orange-500" />
+              {strCategory}
+            </span>
           </div>
         </div>
 
-        {/* Tags section */}
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-3 border-t border-gray-100">
-            <ImPriceTags
-              size={12}
-              className="text-gray-400 mt-1 flex-shrink-0"
-            />
-            <div className="flex flex-wrap gap-1 flex-1">
-              {tags.slice(0, 3).map((tag, index) => (
-                <span
-                  key={index}
-                  className="inline-block px-2 py-1 text-xs font-medium bg-orange-50 text-orange-600 rounded-full border border-orange-100 hover:bg-orange-100 transition-colors duration-200"
-                >
-                  {tag.trim()}
-                </span>
-              ))}
-              {tags.length > 3 && (
-                <span className="inline-block px-2 py-1 text-xs font-medium text-gray-500 bg-gray-50 rounded-full">
-                  +{tags.length - 3}
-                </span>
-              )}
+        {/* Content section */}
+        <div className="p-6 h-48 flex flex-col justify-between relative z-10">
+          {/* Main content */}
+          <div className="space-y-3">
+            <Text className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-orange-600 transition-colors duration-300">
+              {strMeal}
+            </Text>
+
+            {/* Location with icon */}
+            <div className="flex items-center gap-2 text-gray-600">
+              <ImLocation size={14} className="text-orange-500 flex-shrink-0" />
+              <Text className="text-sm font-medium">{strArea}</Text>
             </div>
           </div>
-        )}
-      </div>
 
-      {/* Hover glow effect */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400/10 via-pink-400/10 to-orange-400/10 blur-xl"></div>
+          {/* Tags section */}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 pt-3 border-t border-gray-100">
+              <ImPriceTags
+                size={12}
+                className="text-gray-400 mt-1 flex-shrink-0"
+              />
+              <div className="flex flex-wrap gap-1 flex-1">
+                {tags.slice(0, 3).map((tag, index) => (
+                  <span
+                    key={index}
+                    className="inline-block px-2 py-1 text-xs font-medium bg-orange-50 text-orange-600 rounded-full border border-orange-100 hover:bg-orange-100 transition-colors duration-200"
+                  >
+                    {tag.trim()}
+                  </span>
+                ))}
+                {tags.length > 3 && (
+                  <span className="inline-block px-2 py-1 text-xs font-medium text-gray-500 bg-gray-50 rounded-full">
+                    +{tags.length - 3}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Hover glow effect */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400/10 via-pink-400/10 to-orange-400/10 blur-xl"></div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

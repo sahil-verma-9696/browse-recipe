@@ -1,6 +1,19 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { Clock, Users, ChefHat, Youtube, ExternalLink, Heart, Timer, Play, Pause, RotateCcw, Check } from "lucide-react";
+import {
+  Clock,
+  Users,
+  ChefHat,
+  Youtube,
+  ExternalLink,
+  Heart,
+  Timer,
+  Play,
+  Pause,
+  RotateCcw,
+  Check,
+} from "lucide-react";
+import Image from "../../components/image";
 
 export default function RecipePage() {
   const { mealId } = useParams();
@@ -13,19 +26,20 @@ export default function RecipePage() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [checkedIngredients, setCheckedIngredients] = useState(new Set());
 
+
   const countRef = useRef(0);
   const intervalRef = useRef(null);
 
   useEffect(() => {
     // Check if recipe is in favorites (using localStorage simulation with state)
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
     setIsFavorite(favorites.includes(mealId));
   }, [mealId]);
 
   useEffect(() => {
     if (isTimerActive && timeLeft > 0) {
       intervalRef.current = setInterval(() => {
-        setTimeLeft(time => {
+        setTimeLeft((time) => {
           if (time <= 1) {
             setIsTimerActive(false);
             // Timer finished - could add notification sound here
@@ -74,7 +88,9 @@ export default function RecipePage() {
         ingredients.push({
           ingredient: ingredient.trim(),
           measure: measure ? measure.trim() : "",
-          imageUrl: `https://www.themealdb.com/images/ingredients/${ingredient.trim().replace(/ /g, '_')}.png`
+          imageUrl: `https://www.themealdb.com/images/ingredients/${ingredient
+            .trim()
+            .replace(/ /g, "_")}.png`,
         });
       }
     }
@@ -82,16 +98,16 @@ export default function RecipePage() {
   };
 
   const toggleFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
     let newFavorites;
-    
+
     if (isFavorite) {
-      newFavorites = favorites.filter(id => id !== mealId);
+      newFavorites = favorites.filter((id) => id !== mealId);
     } else {
       newFavorites = [...favorites, mealId];
     }
-    
-    localStorage.setItem('favorites', JSON.stringify(newFavorites));
+
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
     setIsFavorite(!isFavorite);
   };
 
@@ -113,7 +129,9 @@ export default function RecipePage() {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const toggleIngredientCheck = (index) => {
@@ -150,27 +168,31 @@ export default function RecipePage() {
         {/* Header Section */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
           <div className="relative">
-            <img
+            <Image
               src={meal.strMealThumb}
               alt={meal.strMeal}
               className="w-full h-64 md:h-96 object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-            
+
             {/* Favorite Button */}
             <button
               onClick={toggleFavorite}
               className={`absolute top-6 right-6 p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
-                isFavorite 
-                  ? 'bg-red-500 text-white shadow-lg' 
-                  : 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
+                isFavorite
+                  ? "bg-red-500 text-white shadow-lg"
+                  : "bg-white/20 backdrop-blur-sm text-white hover:bg-white/30"
               }`}
             >
-              <Heart className={`w-6 h-6 ${isFavorite ? 'fill-current' : ''}`} />
+              <Heart
+                className={`w-6 h-6 ${isFavorite ? "fill-current" : ""}`}
+              />
             </button>
 
             <div className="absolute bottom-6 left-6 text-white">
-              <h1 className="text-3xl md:text-5xl font-bold mb-2">{meal.strMeal}</h1>
+              <h1 className="text-3xl md:text-5xl font-bold mb-2">
+                {meal.strMeal}
+              </h1>
               <div className="flex items-center gap-4 text-sm md:text-base">
                 <span className="bg-orange-500 px-3 py-1 rounded-full font-medium">
                   {meal.strCategory}
@@ -189,7 +211,7 @@ export default function RecipePage() {
             <Timer className="text-orange-500 w-6 h-6" />
             <h2 className="text-2xl font-bold text-gray-800">Cooking Timer</h2>
           </div>
-          
+
           <div className="flex flex-col md:flex-row items-center gap-6">
             {/* Timer Display */}
             <div className="flex-1">
@@ -200,11 +222,19 @@ export default function RecipePage() {
                   </div>
                   <div className="flex justify-center gap-4">
                     <button
-                      onClick={isTimerActive ? pauseTimer : () => setIsTimerActive(true)}
+                      onClick={
+                        isTimerActive
+                          ? pauseTimer
+                          : () => setIsTimerActive(true)
+                      }
                       className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
                     >
-                      {isTimerActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                      {isTimerActive ? 'Pause' : 'Resume'}
+                      {isTimerActive ? (
+                        <Pause className="w-4 h-4" />
+                      ) : (
+                        <Play className="w-4 h-4" />
+                      )}
+                      {isTimerActive ? "Pause" : "Resume"}
                     </button>
                     <button
                       onClick={resetTimer}
@@ -219,24 +249,32 @@ export default function RecipePage() {
                 <div className="text-center">
                   <div className="flex justify-center gap-4 mb-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Minutes</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Minutes
+                      </label>
                       <input
                         type="number"
                         min="0"
                         max="999"
                         value={timerMinutes}
-                        onChange={(e) => setTimerMinutes(parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          setTimerMinutes(parseInt(e.target.value) || 0)
+                        }
                         className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Seconds</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Seconds
+                      </label>
                       <input
                         type="number"
                         min="0"
                         max="59"
                         value={timerSeconds}
-                        onChange={(e) => setTimerSeconds(parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          setTimerSeconds(parseInt(e.target.value) || 0)
+                        }
                         className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                       />
                     </div>
@@ -255,7 +293,7 @@ export default function RecipePage() {
 
             {/* Quick Timer Buttons */}
             <div className="flex flex-wrap gap-2">
-              {[5, 10, 15, 30, 45, 60].map(minutes => (
+              {[5, 10, 15, 30, 45, 60].map((minutes) => (
                 <button
                   key={minutes}
                   onClick={() => {
@@ -279,48 +317,56 @@ export default function RecipePage() {
             <div className="bg-white rounded-2xl shadow-lg p-6 h-fit sticky top-8">
               <div className="flex items-center gap-3 mb-6">
                 <ChefHat className="text-orange-500 w-6 h-6" />
-                <h2 className="text-2xl font-bold text-gray-800">Ingredients</h2>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Ingredients
+                </h2>
               </div>
               <div className="space-y-3">
                 {ingredients.map((item, index) => (
                   <div
                     key={index}
                     className={`flex items-center gap-3 p-3 bg-orange-50 rounded-lg border-l-4 border-orange-500 transition-opacity ${
-                      checkedIngredients.has(index) ? 'opacity-60' : ''
+                      checkedIngredients.has(index) ? "opacity-60" : ""
                     }`}
                   >
                     <button
                       onClick={() => toggleIngredientCheck(index)}
                       className={`flex-shrink-0 w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${
                         checkedIngredients.has(index)
-                          ? 'bg-green-500 border-green-500 text-white'
-                          : 'border-gray-300 hover:border-orange-500'
+                          ? "bg-green-500 border-green-500 text-white"
+                          : "border-gray-300 hover:border-orange-500"
                       }`}
                     >
-                      {checkedIngredients.has(index) && <Check className="w-4 h-4" />}
+                      {checkedIngredients.has(index) && (
+                        <Check className="w-4 h-4" />
+                      )}
                     </button>
-                    
-                    <img
+
+                    <Image
                       src={item.imageUrl}
                       alt={item.ingredient}
                       className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                      }}
                     />
-                    
+
                     <div className="flex-1 min-w-0">
-                      <div className={`font-medium text-gray-700 ${checkedIngredients.has(index) ? 'line-through' : ''}`}>
+                      <div
+                        className={`font-medium text-gray-700 ${
+                          checkedIngredients.has(index) ? "line-through" : ""
+                        }`}
+                      >
                         {item.ingredient}
                       </div>
-                      <div className="text-orange-600 font-semibold text-sm">{item.measure}</div>
+                      <div className="text-orange-600 font-semibold text-sm">
+                        {item.measure}
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-              
+
               <div className="mt-4 text-sm text-gray-600 text-center">
-                {checkedIngredients.size} of {ingredients.length} ingredients ready
+                {checkedIngredients.size} of {ingredients.length} ingredients
+                ready
               </div>
             </div>
           </div>
@@ -354,7 +400,7 @@ export default function RecipePage() {
                   <span className="font-semibold">Watch Video</span>
                 </a>
               )}
-              
+
               {meal.strSource && (
                 <a
                   href={meal.strSource}
@@ -373,7 +419,7 @@ export default function RecipePage() {
               <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4">Tags</h3>
                 <div className="flex flex-wrap gap-2">
-                  {meal.strTags.split(',').map((tag, index) => (
+                  {meal.strTags.split(",").map((tag, index) => (
                     <span
                       key={index}
                       className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium"
