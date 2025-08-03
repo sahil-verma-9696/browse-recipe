@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "../image";
+import Image from "../../../../components/image";
 import { Link } from "react-router";
 
 export default function CategoryCard({ categoryData = {} }) {

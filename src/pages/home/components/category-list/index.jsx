@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import CategoryCard from "./category-card";
-import Text from "../text";
+import Text from "../../../../components/text";
 
 export default function CategoryList() {
   const [categories, setCategories] = useState([]);
