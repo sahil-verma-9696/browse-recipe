@@ -1,5 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createContext } from "react";
+import { APP_NAME } from "../constant";
+import usePersistState from "../hook/usePersistState";
 
 const defaultValues = {
   favorites: [],
@@ -9,7 +11,7 @@ const defaultValues = {
 const GlobalContext = createContext(defaultValues);
 
 export const GlobalStateProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = usePersistState([], "favorites");
   return (
     <GlobalContext.Provider value={{ favorites, setFavorites }}>
       {children}
