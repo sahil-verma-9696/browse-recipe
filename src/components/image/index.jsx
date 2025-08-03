@@ -1,13 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { ImImage } from "react-icons/im";
 
 import cn from "../../utils/cn";
+import { X } from "lucide-react";
 
-export default function Image({ src, alt, className = "" }) {
+const Image = memo(function Image({ src, alt, className = "" }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const imgRef = useRef(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -18,8 +20,7 @@ export default function Image({ src, alt, className = "" }) {
         }
       },
       {
-        rootMargin: "100px", // preload before it comes into view
-        // threshold: .5, // if 50% of the image is visible
+        rootMargin: "100px",
       }
     );
 
@@ -60,6 +61,7 @@ export default function Image({ src, alt, className = "" }) {
       {/* Main Image */}
       {isInView && (
         <img
+          onDoubleClick={() => setIsFullscreen(true)}
           src={src}
           alt={alt}
           onLoad={handleLoad}
@@ -70,6 +72,31 @@ export default function Image({ src, alt, className = "" }) {
           )}
         />
       )}
+
+      {/* Fullscreen Image */}
+      {isFullscreen && (
+        <div className="fixed w-full h-screen top-0 left-0 z-50 flex items-center justify-center bg-[#00000080]">
+          <div className="relative w-100">
+            <div
+              className="bg-white p-4 rounded-full absolute top-0 right-0 cursor-pointer"
+              onClick={() => setIsFullscreen(false)}
+            >
+              <X className="font-extrabold" size={24} />
+            </div>
+            <img
+              src={src}
+              alt={alt}
+              onLoad={handleLoad}
+              onError={handleError}
+              className={cn(
+                `object-cover w-full transition-all duration-700 ease-out`
+              )}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+});
+
+export default Image;
