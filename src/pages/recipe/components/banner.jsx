@@ -24,7 +24,7 @@ const Banner = memo((props) => {
         // Add to favorites
         return [...prev, meal];
       }
-    });
+    }); 
   }, [meal, setFavorites]);
 
   // Memoize meal properties to prevent accessing them multiple times
