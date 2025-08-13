@@ -11,7 +11,9 @@ const defaultValues = {
 const GlobalContext = createContext(defaultValues);
 
 export const GlobalStateProvider = ({ children }) => {
-  const [favorites, setFavorites] = usePersistState([], "favorites");
+  const [favorites, setFavorites] = usePersistState([], "favorites", {
+    onError: (error) => console.warn("localStorage error:", error),
+  });
   return (
     <GlobalContext.Provider value={{ favorites, setFavorites }}>
       {children}

@@ -4,7 +4,7 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 
 ---
 
-## ✅ v1.0 - MVP: Basic Meal Explorer
+## ✅ v0.0 - MVP: Basic Meal Explorer
 
 ### Pages
 
@@ -28,7 +28,7 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 
 ---
 
-## ✅ v1.1 - Favourites (Local Storage)
+## ✅ v0.1 - Favourites (Local Storage)
 
 ### Pages
 
@@ -42,7 +42,7 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 
 ---
 
-## ✅ v1.2 - Authentication (Frontend Only)
+## ✅ v0.2 - Authentication (Frontend Only)
 
 ### Features
 
@@ -53,7 +53,7 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 
 ---
 
-## ⏳ v1.3 - Backend Integration Begins
+## ⏳ v0.3 - Backend Integration Begins
 
 > Transition from frontend-only to persistent data backend.
 
@@ -67,7 +67,7 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 
 ---
 
-## 🔐 v1.4 - Auth Guard & Route Protection
+## 🔐 v0.4 - Auth Guard & Route Protection
 
 ### Features
 
@@ -77,7 +77,7 @@ This roadmap tracks the development of the AI Powered Meal Planner.
 
 ---
 
-## 💬 v1.5 - UI Feedback & Error States
+## 💬 v0.5 - UI Feedback & Error States
 
 ### Features
 
